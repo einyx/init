@@ -10,7 +10,7 @@ ansible --version
 
 if [[ -v ROLE ]]
 then
-
+  echo "something"
 else
   NEW_HOSTNAME=${TRUNC_INSTANCE_ID}
 fi
