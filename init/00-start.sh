@@ -14,6 +14,8 @@ INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
 REGION=`curl --silent http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/.$//'`
 aws ec2 describe-tags --region $REGION --filter "Name=resource-id,Values=$INSTANCE_ID" --output=text | sed -r 's/TAGS\t(.*)\t.*\t.*\t(.*)/\1="\2"/' > /etc/ec2-tags
 
+set -o allexport
+source /etc/ec2-tags
 
 echo "Updating hostname"
 IP=$(curl -s "${EC2_METADATA_URL}/local-ipv4")
