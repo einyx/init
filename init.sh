@@ -22,6 +22,7 @@ function init()
     fi
     source "${init_path}"
 }
+source /etc/ec2-tags
 
 init init/00-start.sh
 init init/10-volumes.sh
