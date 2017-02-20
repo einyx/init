@@ -1,13 +1,14 @@
+#!/bin/bash
+set -x
 exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1
-
-PLAYBOOK="init"
+PLAYBOOK=init
 
 
 function download()
 {
     local init_path="${1}"
     local retry_count_down=30
-    while ! wget --no-verbose --retry-connrefused --random-wait -O "${init_path}" "https://raw.githubusercontent.com/einyx/{$PLAYBOOK}/${BS_BRANCH:-master}/${module_path}" && [ ${retry_count_down} -gt 0 ] ; do
+      while ! wget --no-verbose --retry-connrefused --random-wait -O "${init_path}" "https://raw.githubusercontent.com/einyx/${PLAYBOOK}/${BS_BRANCH:-master}/${module_path}" && [ ${retry_count_down} -gt 0 ] ; do
         retry_count_down=$((retry_count_down - 1))
         sleep 10
     done
@@ -26,6 +27,7 @@ function init()
 
 init init/00-start.sh
 init init/10-volumes.sh
+
 if [ "${ANSIBLE}" == "yes" ]
 then
     init init/90-ansible.sh
