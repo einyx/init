@@ -22,6 +22,8 @@ function init()
     fi
     source "${init_path}"
 }
+
+set -o allexport
 source /etc/ec2-tags
 
 init init/00-start.sh
