@@ -7,11 +7,11 @@ readonly EC2_METADATA_URL='http://169.254.169.254/latest/meta-data'
 
 echo "Install init packages"
 curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-yum install unzip
+yum install -y unzip
 unzip awscli-bundle.zip
 ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-INSTANCE_ID=`wget -qO- http://instance-data/latest/meta-data/instance-id`
-REGION=`wget -qO- http://instance-data/latest/meta-data/placement/availability-zone | sed 's/.$//'`
+INSTANCE_ID=`curl --silent http://169.254.169.254/latest/meta-data/instance-id`
+REGION=`curl --silent http://169.254.169.254/latest/meta-data/placement/availability-zone | sed 's/.$//'`
 aws ec2 describe-tags --region $REGION --filter "Name=resource-id,Values=$INSTANCE_ID" --output=text | sed -r 's/TAGS\t(.*)\t.*\t.*\t(.*)/\1="\2"/' > /etc/ec2-tags
 
 
@@ -30,10 +30,3 @@ hostname ${NEW_HOSTNAME}
 service rsyslog restart
 
 umask 022
-
-if [[ "${ANSIBLE}" == "yes" ]]
-then
-  echo "something"
-        fi
-    done
-fi
