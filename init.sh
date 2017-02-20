@@ -27,7 +27,7 @@ source /etc/ec2-tags
 init init/00-start.sh
 init init/10-volumes.sh
 
-if [ $RUN_ANSIBLE == "yes" ]
+if [ "$RUN_ANSIBLE" == "yes" ]
 then
     init init/90-ansible.sh
 fi
