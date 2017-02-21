@@ -10,10 +10,10 @@ function ansible_install()
   ansible --version
 }
 
-#function ansible_run()
-#{
-#
-#}
+function ansible_run()
+{
+  echo "something $1"
+}
 
 if [[ -v ROLE ]]
 then
