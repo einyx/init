@@ -17,6 +17,7 @@ function ansible_run()
 
 if [[ -v ROLE ]]
 then
+  ansible_install
   ansible_run $ROLE
 else
   NEW_HOSTNAME=${TRUNC_INSTANCE_ID}
